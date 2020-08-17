@@ -1,4 +1,4 @@
-const
+const _ = require('lodash');
 const User = require("../models/user");
 
 exports.userById = (req, res, next, id) => {
@@ -38,4 +38,32 @@ exports.getUser = (req, res) => {
     req.profile.hashed_password = undefined;
     req.profile.salt = undefined;
     return res.json(req.profile);
+};
+
+exports.updateUser = (req, res, next) => {
+    let user = req.profile
+    user = _.extend(user, req.body)
+    user.updated = Date.now()
+    user.save((err) => {
+        if (err) {
+            return res.status(400).json({
+                error: "You are not authorised"
+            });
+        }
+        req.profile.hashed_password = undefined;
+        req.profile.salt = undefined;
+        res.json({ user })
+    });
+};
+
+exports.deleteUser = (req, res, next) => {
+    let user = req.profile
+    user.remove((err, user) => {
+        if (err) {
+            return res.status(400).json({
+                error: err
+            })
+        }
+        res.json({ message: "User deleted" });
+    })
 }
