@@ -7,6 +7,7 @@ import Signin from "./user/Signin";
 import Profile from "./user/Profile";
 import Users from "./user/Users";
 import EditProfile from "./user/EditProfile";
+import PrivateRoute from "./auth/PrivateRoute";
 
 function MainRouter() {
   return (
@@ -16,9 +17,17 @@ function MainRouter() {
         <Route exact path="/" component={Home}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/signin" component={Signin}></Route>
-        <Route exact path="/user/:userId" component={Profile}></Route>
-        <Route exact path="/users" component={Users}></Route>
-        <Route exact path="/user/edit/:userId" component={EditProfile}></Route>
+        <PrivateRoute
+          exact
+          path="/user/:userId"
+          component={Profile}
+        ></PrivateRoute>
+        <PrivateRoute exact path="/users" component={Users}></PrivateRoute>
+        <PrivateRoute
+          exact
+          path="/user/edit/:userId"
+          component={EditProfile}
+        ></PrivateRoute>
       </Switch>
     </div>
   );
