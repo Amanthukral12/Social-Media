@@ -2,6 +2,7 @@ const _ = require("lodash");
 const User = require("../models/user");
 const formidable = require("formidable");
 const fs = require("fs");
+const { profile } = require("console");
 
 exports.userById = (req, res, next, id) => {
   User.findById(id).exec((err, user) => {
@@ -70,6 +71,14 @@ exports.updateUser = (req, res, next) => {
       res.json(user);
     });
   });
+};
+
+exports.userPhoto = (req, res, next) => {
+  if (req.profile.photo.data) {
+    res.set(("Content-Type", req.profile.photo.contenType));
+    return res.send(req.profile.photo.data);
+  }
+  next();
 };
 
 exports.deleteUser = (req, res, next) => {

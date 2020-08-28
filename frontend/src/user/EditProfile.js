@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { isAuthenticated } from "../auth";
 import { read, update } from "./apiUser";
 import { Redirect } from "react-router-dom";
+import DefaultProfile from "../images/avatar.png";
 
 class EditProfile extends Component {
   constructor() {
@@ -13,6 +14,7 @@ class EditProfile extends Component {
       password: "",
       redirectToProfile: false,
       error: "",
+      fileSize: 0,
     };
   }
 
@@ -39,7 +41,11 @@ class EditProfile extends Component {
   }
 
   isValid = () => {
-    const { name, email, password } = this.state;
+    const { name, email, password, fileSize } = this.state;
+    if (fileSize > 100000) {
+      this.setState({ error: "File size should be less than 100kb" });
+      return false;
+    }
     if (name.length == 0) {
       this.setState({ error: "Name is required" });
       return false;
@@ -59,9 +65,12 @@ class EditProfile extends Component {
   };
 
   handleChange = (name) => (event) => {
+    this.setState({ error: "" });
     const value = name === "photo" ? event.target.files[0] : event.target.value;
+
+    const fileSize = name === "photo" ? event.target.files[0].size : 0;
     this.userData.set(name, value);
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, fileSize });
   };
 
   clickSubmit = (event) => {
@@ -133,6 +142,10 @@ class EditProfile extends Component {
       return <Redirect to={`/user/${id}`} />;
     }
 
+    const photoUrl = id
+      ? `${process.env.REACT_APP_API_URL}/user/photo/${id}`
+      : DefaultProfile;
+
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Edit Profile</h2>
@@ -142,6 +155,8 @@ class EditProfile extends Component {
         >
           {error}
         </div>
+
+        <img src={photoUrl} alt={name} />
 
         {this.signupForm(name, email, password)}
       </div>
