@@ -24,15 +24,13 @@ export default class Users extends Component {
       {users.map((user, i) => (
         <div className="card col-md-3" key={i}>
           <img
-            className="card-img-top"
-            src={DefaultProfile}
-            alt="Card image cap"
-            style={{
-              width: "100%",
-              height: "15vw",
-              objectFit: "cover",
-              borderRadius: "100%",
-            }}
+            style={{ height: "200px", width: "auto" }}
+            className="img-thumbnail"
+            src={`${process.env.REACT_APP_API_URL}/user/photo/${
+              user._id
+            }?${new Date().getTime()}`}
+            onError={(i) => (i.target.src = `${DefaultProfile}`)}
+            alt={user.name}
           />
           <div className="card-body">
             <h5 className="card-title">{user.name}</h5>
