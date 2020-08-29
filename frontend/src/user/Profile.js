@@ -59,6 +59,7 @@ export default class Profile extends Component {
             <div className="lead mt-2">
               <p>Hello {user.name}</p>
               <p>Email: {user.email}</p>
+
               <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
             </div>
             {isAuthenticated().user && isAuthenticated().user._id === user._id && (
@@ -72,6 +73,13 @@ export default class Profile extends Component {
                 <DeleteUser userId={user._id} />
               </div>
             )}
+          </div>
+        </div>
+        <div className="row">
+          <div className="col md-12 mt-5 mb-5">
+            <hr />
+            <p className="lead">{user.about}</p>
+            <hr />
           </div>
         </div>
       </div>

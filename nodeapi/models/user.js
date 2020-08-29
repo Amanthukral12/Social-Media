@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
     data: Buffer,
     contenType: String,
   },
+  about: {
+    type: String,
+    trim: true,
+  },
 });
 
 userSchema
