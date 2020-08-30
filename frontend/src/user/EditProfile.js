@@ -48,7 +48,7 @@ class EditProfile extends Component {
       this.setState({ error: "File size should be less than 100kb" });
       return false;
     }
-    if (name.length == 0) {
+    if (name.length === 0) {
       this.setState({ error: "Name is required" });
       return false;
     }

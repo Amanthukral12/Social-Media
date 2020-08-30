@@ -22,7 +22,7 @@ export default class Users extends Component {
   renderUsers = (users) => (
     <div className="row">
       {users.map((user, i) => (
-        <div className="card col-md-3" key={i}>
+        <div className="card col-md-3 mr-3 border" key={i}>
           <img
             style={{ height: "200px", width: "auto" }}
             className="img-thumbnail"
