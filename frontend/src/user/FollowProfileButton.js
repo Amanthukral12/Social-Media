@@ -1,16 +1,18 @@
 import React, { Component } from "react";
 import { follow, unfollow } from "./apiUser";
 
-export default class FollowProfileButton extends Component {
+class FollowProfileButton extends Component {
   followClick = () => {
     this.props.onButtonClick(follow);
   };
+
   unfollowClick = () => {
     this.props.onButtonClick(unfollow);
   };
+
   render() {
     return (
-      <div className="d-inline-block mt-5">
+      <div className="d-inline-block">
         {!this.props.following ? (
           <button
             onClick={this.followClick}
@@ -30,3 +32,5 @@ export default class FollowProfileButton extends Component {
     );
   }
 }
+
+export default FollowProfileButton;

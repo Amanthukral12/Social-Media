@@ -5,7 +5,8 @@ import { read } from "./apiUser";
 import DefaultProfile from "../images/avatar.png";
 import DeleteUser from "./DeleteUser";
 import FollowProfileButton from "./FollowProfileButton";
-export default class Profile extends Component {
+
+class Profile extends Component {
   constructor() {
     super();
     this.state = {
@@ -16,9 +17,11 @@ export default class Profile extends Component {
     };
   }
 
+  // check follow
   checkFollow = (user) => {
     const jwt = isAuthenticated();
     const match = user.followers.find((follower) => {
+      // one id has many other ids (followers) and vice versa
       return follower._id === jwt.user._id;
     });
     return match;
@@ -48,6 +51,7 @@ export default class Profile extends Component {
       }
     });
   };
+
   componentDidMount() {
     const userId = this.props.match.params.userId;
     this.init(userId);
@@ -61,11 +65,13 @@ export default class Profile extends Component {
   render() {
     const { redirectToSignin, user } = this.state;
     if (redirectToSignin) return <Redirect to="/signin" />;
+
     const photoUrl = user._id
       ? `${process.env.REACT_APP_API_URL}/user/photo/${
           user._id
         }?${new Date().getTime()}`
       : DefaultProfile;
+
     return (
       <div className="container">
         <h2 className="mt-5 mb-5">Profile</h2>
@@ -79,13 +85,14 @@ export default class Profile extends Component {
               alt={user.name}
             />
           </div>
+
           <div className="col-md-6">
             <div className="lead mt-2">
               <p>Hello {user.name}</p>
               <p>Email: {user.email}</p>
-
               <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
             </div>
+
             {isAuthenticated().user &&
             isAuthenticated().user._id === user._id ? (
               <div className="d-inline-block">
@@ -116,3 +123,5 @@ export default class Profile extends Component {
     );
   }
 }
+
+export default Profile;
