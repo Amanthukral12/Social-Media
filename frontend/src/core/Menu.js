@@ -64,6 +64,16 @@ function Menu({ history }) {
             <li className="nav-item">
               <Link
                 className="nav-link"
+                to={`/findpeople`}
+                style={isActive(history, `/findpeople`)}
+              >
+                Explore People
+              </Link>
+            </li>
+
+            <li className="nav-item">
+              <Link
+                className="nav-link"
                 to={`/user/${isAuthenticated().user._id}`}
                 style={isActive(history, `/user/${isAuthenticated().user._id}`)}
               >

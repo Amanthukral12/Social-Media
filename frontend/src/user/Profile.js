@@ -89,9 +89,8 @@ class Profile extends Component {
 
           <div className="col-md-6">
             <div className="lead mt-2">
-              <p>Hello {user.name}</p>
+              <p>{user.name}</p>
               <p>Email: {user.email}</p>
-              <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
             </div>
 
             {isAuthenticated().user &&

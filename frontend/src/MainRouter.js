@@ -8,6 +8,7 @@ import Profile from "./user/Profile";
 import Users from "./user/Users";
 import EditProfile from "./user/EditProfile";
 import PrivateRoute from "./auth/PrivateRoute";
+import FindPeople from "./user/FindPeople";
 
 function MainRouter() {
   return (
@@ -21,6 +22,11 @@ function MainRouter() {
           exact
           path="/user/:userId"
           component={Profile}
+        ></PrivateRoute>
+        <PrivateRoute
+          exact
+          path="/findpeople"
+          component={FindPeople}
         ></PrivateRoute>
         <PrivateRoute exact path="/users" component={Users}></PrivateRoute>
         <PrivateRoute
