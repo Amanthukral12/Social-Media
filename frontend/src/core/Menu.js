@@ -27,9 +27,18 @@ function Menu({ history }) {
             Users
           </Link>
         </li>
+        <li className="nav-item">
+          <Link
+            className="nav-link"
+            to={`/findpeople`}
+            style={isActive(history, `/findpeople`)}
+          >
+            Explore People
+          </Link>
+        </li>
         {!isAuthenticated() && (
           <>
-            <li className="nav-item">
+            <li className="nav-item ml-auto">
               <Link
                 className="nav-link"
                 style={isActive(history, "/signin")}
@@ -49,8 +58,18 @@ function Menu({ history }) {
             </li>
           </>
         )}
+
         {isAuthenticated() && (
           <>
+            <li className="nav-item ml-auto">
+              <Link
+                className="nav-link"
+                to={`/user/${isAuthenticated().user._id}`}
+                style={isActive(history, `/user/${isAuthenticated().user._id}`)}
+              >
+                {`${isAuthenticated().user.name}'s profile`}{" "}
+              </Link>
+            </li>
             <li className="nav-item">
               <a
                 className="nav-link"
@@ -59,26 +78,6 @@ function Menu({ history }) {
               >
                 Sign Out
               </a>
-            </li>
-
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                to={`/findpeople`}
-                style={isActive(history, `/findpeople`)}
-              >
-                Explore People
-              </Link>
-            </li>
-
-            <li className="nav-item">
-              <Link
-                className="nav-link"
-                to={`/user/${isAuthenticated().user._id}`}
-                style={isActive(history, `/user/${isAuthenticated().user._id}`)}
-              >
-                {`${isAuthenticated().user.name}'s profile`}{" "}
-              </Link>
             </li>
           </>
         )}
