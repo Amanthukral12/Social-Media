@@ -9,6 +9,7 @@ import Users from "./user/Users";
 import EditProfile from "./user/EditProfile";
 import PrivateRoute from "./auth/PrivateRoute";
 import FindPeople from "./user/FindPeople";
+import NewPost from "./post/NewPost";
 
 function MainRouter() {
   return (
@@ -33,6 +34,11 @@ function MainRouter() {
           exact
           path="/user/edit/:userId"
           component={EditProfile}
+        ></PrivateRoute>
+        <PrivateRoute
+          exact
+          path="/post/create"
+          component={NewPost}
         ></PrivateRoute>
       </Switch>
     </div>

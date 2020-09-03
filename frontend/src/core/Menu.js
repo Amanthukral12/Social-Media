@@ -33,9 +33,10 @@ function Menu({ history }) {
             to={`/findpeople`}
             style={isActive(history, `/findpeople`)}
           >
-            Explore People
+            Dicover People
           </Link>
         </li>
+
         {!isAuthenticated() && (
           <>
             <li className="nav-item ml-auto">
@@ -68,6 +69,15 @@ function Menu({ history }) {
                 style={isActive(history, `/user/${isAuthenticated().user._id}`)}
               >
                 {`${isAuthenticated().user.name}'s profile`}{" "}
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link
+                className="nav-link"
+                to={`/post/create`}
+                style={isActive(history, `/post/create`)}
+              >
+                New Post
               </Link>
             </li>
             <li className="nav-item">
