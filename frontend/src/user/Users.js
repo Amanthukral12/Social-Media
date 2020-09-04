@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { list } from "./apiUser";
+import { userList } from "./apiUser";
 import { Link } from "react-router-dom";
 import DefaultProfile from "../images/avatar.png";
 export default class Users extends Component {
@@ -10,7 +10,7 @@ export default class Users extends Component {
     };
   }
   componentDidMount() {
-    list().then((data) => {
+    userList().then((data) => {
       if (data.error) {
         console.log(data.error);
       } else {

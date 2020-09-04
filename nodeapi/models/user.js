@@ -4,11 +4,7 @@ const crypto = require("crypto");
 const { ObjectId } = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    trim: true,
-    required: true,
-  },
+  name: String,
   email: {
     type: String,
     trim: true,
