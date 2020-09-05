@@ -22,16 +22,20 @@ export default class Posts extends Component {
 
   renderPosts = (posts) => {
     return (
-      <div className="row">
+      <div className="row d-flex align-items-center justify-content-center display-flex">
         {posts.map((post, i) => {
           const posterId = post.postedBy ? `/user/${post.postedBy._id}` : "";
           const posterName = post.postedBy ? post.postedBy.name : "Unknown";
 
           return (
-            <div className="card col-md-12 mb-5 border" key={i}>
-              <h6 className="text-primary">
+            <div className="bg-white col-md-7 mb-5 mt-5 border" key={i}>
+              <h6 className="text-primary mb-3 mt-3">
                 <Link to={`${posterId}`}>{posterName}</Link>
               </h6>
+              <img
+                src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
+                style={{ height: "614px", width: "614px" }}
+              />
               <p className="card-text">{post.body}</p>
               {new Date(post.created).toDateString()}
               {/* <Link
