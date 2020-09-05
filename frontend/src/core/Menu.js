@@ -3,9 +3,20 @@ import { Link, withRouter } from "react-router-dom";
 import { signout, isAuthenticated } from "../auth";
 
 const isActive = (history, path) => {
-  if (history.location.pathname === path) return { color: "#ff9900" };
+  if (history.location.pathname === path)
+    return {
+      color: "#ff9900",
+      fontWeight: "bold",
+      lineHeight: 2,
+      paddingTop: "0rem",
+      paddingBottom: "0rem",
+      fontSize: 24,
+    };
   else {
-    return { color: "#ffffff" };
+    return {
+      color: "#ffffff",
+      fontWeight: "bold",
+    };
   }
 };
 
@@ -14,12 +25,13 @@ function Menu({ history }) {
     <>
       <div>
         <ul
-          className="nav nav-tabs bg-primary justify-content-center"
+          className="nav nav-tabs bg-primary"
           style={{
             overflow: "hidden",
             position: "fixed",
             width: "100%",
             zIndex: "1",
+            lineHeight: "0.7",
           }}
         >
           {/* <li className="nav-item">
@@ -32,13 +44,16 @@ function Menu({ history }) {
             </Link>
           </li> */}
 
-          <li className="nav-item">
-            <Link
-              className="nav-link justify-content-center"
-              style={isActive(history, "/")}
-              to="/"
-            >
-              Kalashala
+          <li
+            className="nav-item"
+            style={{
+              marginLeft: "39rem",
+              marginRight: "23rem",
+              fontSize: "20",
+            }}
+          >
+            <Link className="nav-link" style={isActive(history, "/")} to="/">
+              KALASHALA
             </Link>
           </li>
           {!isAuthenticated() && (
@@ -103,6 +118,7 @@ function Menu({ history }) {
             zIndex: "1",
             textAlign: "center",
             marginTop: "20px",
+            lineHeight: "0.7",
           }}
         >
           <li className="nav-item col-3">
