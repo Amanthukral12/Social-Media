@@ -10,13 +10,14 @@ import EditProfile from "./user/EditProfile";
 import PrivateRoute from "./auth/PrivateRoute";
 import FindPeople from "./user/FindPeople";
 import NewPost from "./post/NewPost";
-
+import SinglePost from "./post/SinglePost";
 function MainRouter() {
   return (
     <div>
       <Menu />
       <Switch>
         <Route exact path="/" component={Home}></Route>
+        <Route exact path="/post/:postId" component={SinglePost}></Route>
         <Route exact path="/signup" component={Signup}></Route>
         <Route exact path="/signin" component={Signin}></Route>
         <PrivateRoute

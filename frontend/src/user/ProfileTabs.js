@@ -25,7 +25,7 @@ export default class ProfileTabs extends Component {
             return (
               <div className="card col-md-4 mb-2 border-darken-3" key={i}>
                 <div className="card-body">
-                  <Link to={``}>
+                  <Link to={`/post/${post._id}`}>
                     <img
                       src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
                       alt=""
