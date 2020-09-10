@@ -114,28 +114,24 @@ function Menu({ history }) {
             lineHeight: "0.7",
           }}
         >
-          {isAuthenticated() && (
-            <>
-              <li className="nav-item col-3">
-                <Link
-                  className="nav-link"
-                  to={`/findpeople`}
-                  style={isActive(history, `/findpeople`)}
-                >
-                  Dicover People
-                </Link>
-              </li>
-              <li className="nav-item col-6">
-                <Link
-                  className="nav-link center"
-                  to={`/post/create`}
-                  style={isActive(history, `/post/create`)}
-                >
-                  New Post
-                </Link>
-              </li>
-            </>
-          )}
+          <li className="nav-item col-3">
+            <Link
+              className="nav-link"
+              to={`/findpeople`}
+              style={isActive(history, `/findpeople`)}
+            >
+              Dicover People
+            </Link>
+          </li>
+          <li className="nav-item col-6">
+            <Link
+              className="nav-link center"
+              to={`/post/create`}
+              style={isActive(history, `/post/create`)}
+            >
+              New Post
+            </Link>
+          </li>
         </ul>
       </div>
     </>

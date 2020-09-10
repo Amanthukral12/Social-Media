@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { singlePost, update } from "./apiPost";
 import { isAuthenticated } from "../auth";
 import { Redirect } from "react-router-dom";
+import DefaultPost from "../images/default.jpg";
 
 export default class EditPost extends Component {
   constructor() {
@@ -35,9 +36,13 @@ export default class EditPost extends Component {
   }
 
   isValid = () => {
-    const { body, fileSize } = this.state;
+    const { fileSize, body } = this.state;
     if (fileSize > 10240) {
       this.setState({ error: "File size should be less than 10mb" });
+      return false;
+    }
+    if (body.length === 0) {
+      this.setState({ error: "can't be empty" });
       return false;
     }
 
@@ -65,7 +70,7 @@ export default class EditPost extends Component {
       update(postId, token, this.postData).then((data) => {
         if (data.error) this.setState({ error: data.error });
         else {
-          this.setState({ photo: "", body: "", redirectToProfile: true });
+          this.setState({ body: "", redirectToProfile: true });
         }
       });
     }
@@ -100,7 +105,7 @@ export default class EditPost extends Component {
   );
 
   render() {
-    const { body, redirectToProfile } = this.state;
+    const { id, body, redirectToProfile, error } = this.state;
     if (redirectToProfile) {
       return <Redirect to={`/user/${isAuthenticated().user._id}`} />;
     }
@@ -109,7 +114,20 @@ export default class EditPost extends Component {
         <br />
         <br />
         <h2 className="mb-5">Edit Post</h2>
-
+        <div
+          className="alert alert-danger"
+          style={{ display: error ? "" : "none" }}
+        >
+          {error}
+        </div>
+        <img
+          style={{ height: "200px", width: "auto" }}
+          className="img-thumbnail"
+          src={`${
+            process.env.REACT_APP_API_URL
+          }/post/photo/${id}?${new Date().getTime()}`}
+          onError={(i) => (i.target.src = `${DefaultPost}`)}
+        />
         {this.editPostForm(body)}
       </div>
     );

@@ -28,6 +28,11 @@ class NewPost extends Component {
       return false;
     }
 
+    if (body.length === 0) {
+      this.setState({ error: "Body is required" });
+      return false;
+    }
+
     return true;
   };
 
