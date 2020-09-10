@@ -53,7 +53,9 @@ export default class SinglePost extends Component {
           <Dropdown className="d-inline float-right mr-1">
             <Dropdown.Toggle variant="success"></Dropdown.Toggle>
             <Dropdown.Menu>
-              <Dropdown.Item>Update</Dropdown.Item>
+              <Dropdown.Item>
+                <Link to={`/post/edit/${post._id}`}>Update</Link>
+              </Dropdown.Item>
               <Dropdown.Item onClick={this.deleteConfirmed}>
                 Delete
               </Dropdown.Item>
