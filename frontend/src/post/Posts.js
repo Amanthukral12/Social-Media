@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { list } from "./apiPost";
-
+import DefaultPost from "../images/default.jpg";
 import { Link } from "react-router-dom";
 
 export default class Posts extends Component {
@@ -35,6 +35,7 @@ export default class Posts extends Component {
               <img
                 src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
                 style={{ height: "614px", width: "614px" }}
+                onError={(i) => (i.target.src = `${DefaultPost}`)}
               />
               <p className="card-text">{post.body}</p>
               {new Date(post.created).toDateString()}

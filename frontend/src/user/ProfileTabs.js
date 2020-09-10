@@ -23,17 +23,15 @@ export default class ProfileTabs extends Component {
         <div className="row">
           {posts.map((post, i) => {
             return (
-              <div className="card col-md-4 mb-2 border-darken-3" key={i}>
-                <div className="card-body">
-                  <Link to={`/post/${post._id}`}>
-                    <img
-                      src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
-                      alt=""
-                      className="img-thunbnail"
-                      style={{ height: "200px", width: "100%" }}
-                    />
-                  </Link>
-                </div>
+              <div className="col-md-4 mb-2" key={i}>
+                <Link to={`/post/${post._id}`}>
+                  <img
+                    src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
+                    alt=""
+                    className="img-thunbnail"
+                    style={{ height: "293px", width: "293px" }}
+                  />
+                </Link>
               </div>
             );
           })}

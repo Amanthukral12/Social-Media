@@ -10,12 +10,16 @@ const isActive = (history, path) => {
       lineHeight: 2,
       paddingTop: "0rem",
       paddingBottom: "0rem",
-      fontSize: 24,
+      fontSize: 20,
     };
   else {
     return {
       color: "#ffffff",
       fontWeight: "bold",
+      lineHeight: 2,
+      paddingTop: "0rem",
+      paddingBottom: "0rem",
+      fontSize: 20,
     };
   }
 };
@@ -34,22 +38,11 @@ function Menu({ history }) {
             lineHeight: "0.7",
           }}
         >
-          {/* <li className="nav-item">
-            <Link
-              className="nav-link"
-              style={isActive(history, "/users")}
-              to="/users"
-            >
-              Users
-            </Link>
-          </li> */}
-
           <li
             className="nav-item"
             style={{
-              marginLeft: "39rem",
-              marginRight: "23rem",
-              fontSize: "20",
+              marginLeft: "35rem",
+              marginRight: "22rem",
             }}
           >
             <Link className="nav-link" style={isActive(history, "/")} to="/">
@@ -121,24 +114,28 @@ function Menu({ history }) {
             lineHeight: "0.7",
           }}
         >
-          <li className="nav-item col-3">
-            <Link
-              className="nav-link"
-              to={`/findpeople`}
-              style={isActive(history, `/findpeople`)}
-            >
-              Dicover People
-            </Link>
-          </li>
-          <li className="nav-item col-6">
-            <Link
-              className="nav-link center"
-              to={`/post/create`}
-              style={isActive(history, `/post/create`)}
-            >
-              New Post
-            </Link>
-          </li>
+          {isAuthenticated() && (
+            <>
+              <li className="nav-item col-3">
+                <Link
+                  className="nav-link"
+                  to={`/findpeople`}
+                  style={isActive(history, `/findpeople`)}
+                >
+                  Dicover People
+                </Link>
+              </li>
+              <li className="nav-item col-6">
+                <Link
+                  className="nav-link center"
+                  to={`/post/create`}
+                  style={isActive(history, `/post/create`)}
+                >
+                  New Post
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </div>
     </>

@@ -115,15 +115,7 @@ class EditProfile extends Component {
           value={name}
         />
       </div>
-      <div className="form-group">
-        <label className="text-muted">Email</label>
-        <input
-          onChange={this.handleChange("email")}
-          type="email"
-          className="form-control"
-          value={email}
-        />
-      </div>
+
       <div className="form-group">
         <label className="text-muted">About</label>
         <textarea
@@ -143,7 +135,10 @@ class EditProfile extends Component {
         />
       </div>
 
-      <button onClick={this.clickSubmit} className="btn btn-raised btn-primary">
+      <button
+        onClick={this.clickSubmit}
+        className="btn btn-raised btn-primary mb-5"
+      >
         Update
       </button>
     </form>
@@ -172,7 +167,7 @@ class EditProfile extends Component {
 
     return (
       <div className="container">
-        <h2 className="mt-5 mb-5">Edit Profile</h2>
+        <h2 className=" mb-5">Edit Profile</h2>
         <div
           className="alert alert-danger"
           style={{ display: error ? "" : "none" }}

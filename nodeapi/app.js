@@ -13,7 +13,7 @@ dotenv.config();
 // db
 // MONGO_URI=mongodb://localhost/nodeapi
 mongoose
-  .connect("mongodb://localhost:27017/nodeapi", {
+  .connect("mongodb://localhost:27017/nodeapi2", {
     useUnifiedTopology: true,
     useNewUrlParser: true,
   })

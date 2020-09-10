@@ -33,7 +33,3 @@ router.param("userId", userById);
 router.param("postId", postById);
 
 module.exports = router;
-
-/* eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZjNhZTM2Njc2MmIyNTA1ZjhiZmU1ZDciLCJpYXQiOjE1OTc2OTQ4NTF9.eknkA2rWKQF0PMFKCPibisjeO8O10iP7XHgM_tPF_7Q
-5f3ae366762b2505f8bfe5d7
-5f3ae4b8762b2505f8bfe5d8 */
