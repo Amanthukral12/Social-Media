@@ -20,6 +20,8 @@ exports.postById = (req, res, next, id) => {
 exports.getPosts = (req, res) => {
   const posts = Post.find()
     .populate("postedBy", "_id name")
+    .populate("comments", "text created")
+    .populate("comments.postedBy", "_id name")
     .select("_id body created likes")
     .sort({ created: -1 })
     .then((posts) => {
@@ -179,4 +181,46 @@ exports.unlike = (req, res) => {
       res.json(result);
     }
   });
+};
+
+exports.comment = (req, res) => {
+  let comment = req.body.comment;
+  comment.postedBy = req.body.userId;
+  Post.findByIdAndUpdate(
+    req.body.postId,
+    { $push: { comments: comment } },
+    { new: true }
+  )
+    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name")
+    .exec((err, result) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      } else {
+        res.json(result);
+      }
+    });
+};
+
+exports.uncomment = (req, res) => {
+  let comment = req.body.comment;
+
+  Post.findByIdAndUpdate(
+    req.body.postId,
+    { $pull: { comments: { id: comment._id } } },
+    { new: true }
+  )
+    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name")
+    .exec((err, result) => {
+      if (err) {
+        return res.status(400).json({
+          error: err,
+        });
+      } else {
+        res.json(result);
+      }
+    });
 };

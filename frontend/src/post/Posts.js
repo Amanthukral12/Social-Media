@@ -39,7 +39,6 @@ class Posts extends Component {
                     style={{
                       width: "100%",
                       borderRadius: "20px",
-                      height: "auto",
                     }}
                   />
                 </Link>
@@ -56,10 +55,8 @@ class Posts extends Component {
     const { posts } = this.state;
     return (
       <div>
-        <h2 className="mb-5">
-          {!posts.length ? "Loading..." : "Recent Posts"}
-        </h2>
-
+        <br />
+        <br />
         {this.renderPosts(posts)}
       </div>
     );
