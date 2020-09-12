@@ -8,12 +8,13 @@ export default class SinglePost extends Component {
   state = {
     post: "",
     redirectToHome: false,
+    redirectToLogin: false,
     like: false,
     likes: 0,
   };
 
   checkLike = (likes) => {
-    const userId = isAuthenticated().user._id;
+    const userId = isAuthenticated() && isAuthenticated().user._id;
     let match = likes.indexOf(userId) !== -1;
     return match;
   };
@@ -34,6 +35,10 @@ export default class SinglePost extends Component {
   };
 
   likeToggle = () => {
+    if (!isAuthenticated()) {
+      this.setState({ redirectToLogin: true });
+      return false;
+    }
     let callApi = this.state.like ? unlike : like;
     const userId = isAuthenticated().user._id;
     const postId = this.state.post._id;
@@ -94,8 +99,26 @@ export default class SinglePost extends Component {
             style={{ height: "614px", width: "614px" }}
             onError={(i) => (i.target.src = `${DefaultPost}`)}
           />
-          <div onClick={this.likeToggle}>{likes} Like</div>
-          <p className="card-text">{post.body}</p>
+          {like ? (
+            <div onClick={this.likeToggle}>
+              <i
+                className="fas fa-thumbs-up fa-lg"
+                style={{ padding: "10px" }}
+              />
+              {likes}
+            </div>
+          ) : (
+            <div onClick={this.likeToggle}>
+              <i
+                className="far fa-thumbs-up fa-lg"
+                style={{ padding: "10px" }}
+              />
+              {likes}
+            </div>
+          )}
+          <p className="card-text">
+            <Link to={`${posterId}`}>{posterName}</Link> {post.body}
+          </p>
           <p>{new Date(post.created).toDateString()}</p>
         </div>
       </div>
@@ -103,10 +126,12 @@ export default class SinglePost extends Component {
   };
 
   render() {
-    if (this.state.redirectToHome) {
+    const { post, redirectToHome, redirectToLogin } = this.state;
+    if (redirectToHome) {
       return <Redirect to={"/"} />;
+    } else if (redirectToLogin) {
+      return <Redirect to={`/signin`} />;
     }
-    const { post } = this.state;
     return <div className="container">{this.renderPost(post)}</div>;
   }
 }

@@ -2,10 +2,8 @@ import React from "react";
 import Posts from "../post/Posts";
 function Home() {
   return (
-    <div>
-      <div className="container">
-        <Posts />
-      </div>
+    <div className="ml-2 mr-2">
+      <Posts />
     </div>
   );
 }
