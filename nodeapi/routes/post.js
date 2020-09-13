@@ -36,8 +36,9 @@ router.post(
 
 router.get("/posts/by/:userId", requireSignin, postByUser);
 router.get("/post/:postId", singlePost);
-router.delete("/post/:postId", requireSignin, isPoster, deletePost);
 router.put("/post/:postId", requireSignin, isPoster, updatePost);
+router.delete("/post/:postId", requireSignin, isPoster, deletePost);
+
 router.get("/post/photo/:postId", photo);
 
 router.param("userId", userById);

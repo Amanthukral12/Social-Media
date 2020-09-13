@@ -31,6 +31,7 @@ export default class SinglePost extends Component {
           post: data,
           likes: data.likes.length,
           like: this.checkLike(data.likes),
+          comments: data.comments,
         });
       }
     });
