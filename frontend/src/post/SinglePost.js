@@ -4,6 +4,7 @@ import { Link, Redirect } from "react-router-dom";
 import { isAuthenticated } from "../auth";
 import DefaultPost from "../images/default.jpg";
 import Dropdown from "react-bootstrap/Dropdown";
+import Comment from "./Comment";
 export default class SinglePost extends Component {
   state = {
     post: "",
@@ -11,6 +12,7 @@ export default class SinglePost extends Component {
     redirectToLogin: false,
     like: false,
     likes: 0,
+    comments: [],
   };
 
   checkLike = (likes) => {
@@ -32,6 +34,10 @@ export default class SinglePost extends Component {
         });
       }
     });
+  };
+
+  updateComments = (comments) => {
+    this.setState({ comments });
   };
 
   likeToggle = () => {
@@ -74,11 +80,11 @@ export default class SinglePost extends Component {
   renderPost = (post) => {
     const posterId = post.postedBy ? `/user/${post.postedBy._id}` : "";
     const posterName = post.postedBy ? post.postedBy.name : "Unknown";
-    const { like, likes } = this.state;
+    const { like, likes, comments } = this.state;
 
     return (
-      <div className="row d-flex align-items-center justify-content-center display-flex">
-        <div className="bg-white col-md-7 mb-5 mt-5 border">
+      <div className="row d-flex display-flex">
+        <div className="bg-white col-md-7 mt-5 mb-5 border">
           <h6 className="d-inline text-primary mb-3 mt-3">
             <Link to={`${posterId}`}>{posterName}</Link>
           </h6>
@@ -119,7 +125,15 @@ export default class SinglePost extends Component {
           <p className="card-text">
             <Link to={`${posterId}`}>{posterName}</Link> {post.body}
           </p>
+
           <p>{new Date(post.created).toDateString()}</p>
+        </div>
+        <div className="bg-white col-md-5 mt-5 mb-5 border">
+          <Comment
+            postId={post._id}
+            comments={comments}
+            updateComments={this.updateComments}
+          />
         </div>
       </div>
     );
@@ -132,6 +146,10 @@ export default class SinglePost extends Component {
     } else if (redirectToLogin) {
       return <Redirect to={`/signin`} />;
     }
-    return <div className="container">{this.renderPost(post)}</div>;
+    return (
+      <div>
+        <div className="container">{this.renderPost(post)}</div>
+      </div>
+    );
   }
 }

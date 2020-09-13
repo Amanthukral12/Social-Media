@@ -29,8 +29,9 @@ class Posts extends Component {
           const posterName = post.postedBy ? post.postedBy.name : " Unknown";
 
           return (
-            <div className="col-md-2" key={i}>
+            <div className="col-md-3" key={i}>
               <div>
+                <Link to={`${posterId}`}>{posterName} </Link>
                 <Link to={`/post/${post._id}`}>
                   <img
                     src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
@@ -42,7 +43,6 @@ class Posts extends Component {
                     }}
                   />
                 </Link>
-                <Link to={`${posterId}`}>{posterName} </Link>
               </div>
             </div>
           );

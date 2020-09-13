@@ -167,6 +167,8 @@ class EditProfile extends Component {
 
     return (
       <div className="container">
+        <br />
+        <br />
         <h2 className=" mb-5">Edit Profile</h2>
         <div
           className="alert alert-danger"
