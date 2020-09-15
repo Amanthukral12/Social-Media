@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
+import DefaultProfile from "../images/avatar.png";
 export default class ProfileTabs extends Component {
   render() {
     const { following, followers, posts } = this.props;

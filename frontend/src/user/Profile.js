@@ -73,7 +73,7 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(props) {
-    const userId = props.match.params.userId;
+    const userId = this.props.match.params.userId;
     this.init(userId);
   }
 
