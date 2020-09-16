@@ -34,7 +34,7 @@ export default class Users extends Component {
             <h5 className="card-title">{user.name}</h5>
             <p className="card-text">{user.email}</p>
             <Link
-              to={`user/${user._id}`}
+              to={`/user/${user._id}`}
               className="btn btn-raised btn-primary btn-sm"
             >
               View Profile

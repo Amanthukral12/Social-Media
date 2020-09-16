@@ -73,7 +73,7 @@ class Profile extends Component {
   }
 
   componentWillReceiveProps(props) {
-    const userId = this.props.match.params.userId;
+    const userId = props.match.params.userId;
     this.init(userId);
   }
 
@@ -82,9 +82,7 @@ class Profile extends Component {
     if (redirectToSignin) return <Redirect to="/signin" />;
 
     const photoUrl = user._id
-      ? `${process.env.REACT_APP_API_URL}/user/photo/${
-          user._id
-        }?${new Date().getTime()}`
+      ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}`
       : DefaultProfile;
 
     return (

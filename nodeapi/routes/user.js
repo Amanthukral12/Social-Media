@@ -13,16 +13,19 @@ const {
   findPeople,
   hasAuthorization,
 } = require("../controllers/user");
+const { postById } = require("../controllers/post");
 const { requireSignin } = require("../controllers/auth");
 const router = express.Router();
+router.param("userId", userById);
+router.param("postId", postById);
 router.put("/user/follow", requireSignin, addFollowing, addFollower);
 router.put("/user/unfollow", requireSignin, removeFollowing, removeFollower);
 router.get("/users", allUsers);
 router.get("/user/:userId", requireSignin, getUser);
+router.get("/user/photo/:userId", userPhoto);
 router.put("/user/:userId", requireSignin, updateUser);
 router.delete("/user/:userId", requireSignin, deleteUser);
-router.get("/user/photo/:userId", userPhoto);
+
 router.get("/user/findpeople/:userId", requireSignin, findPeople);
-router.param("userId", userById);
 
 module.exports = router;

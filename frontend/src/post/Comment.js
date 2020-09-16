@@ -50,30 +50,33 @@ export default class Comment extends Component {
         </form>
 
         <hr />
-        <div className="col-md-4">
+        <div className="col-md-12">
           <h3 className="text-primary">{comments.length} Comments</h3>
           <hr />
           {comments.map((comment, i) => (
             <div key={i}>
-              <div>
+              <Link to={`/user/${comment.postedBy._id}`}>
+                <img
+                  style={{
+                    borderRadius: "50%",
+                    border: "1px solid black",
+                    height: "30px",
+                    width: "30px",
+                  }}
+                  className="float-left mr-2"
+                  src={`${process.env.REACT_APP_API_URL}/user/photo/${comment.postedBy._id}`}
+                  onError={(i) => (i.target.src = `${DefaultProfile}`)}
+                  alt={comment.postedBy.name}
+                />
+              </Link>
+              <p className="card-text">
                 <Link to={`/user/${comment.postedBy._id}`}>
-                  <img
-                    style={{
-                      borderRadius: "50%",
-                      border: "1px solid black",
-                    }}
-                    className="float-left mr-2"
-                    height="30px"
-                    width="30px"
-                    onError={(i) => (i.target.src = `${DefaultProfile}`)}
-                    src={`${process.env.REACT_APP_API_URL}/user/photo/${comment.postedBy._id}`}
-                    alt={comment.postedBy.name}
-                  />
-                </Link>
-                <div>
-                  <p className="lead">{comment.text}</p>
-                </div>
-              </div>
+                  {comment.postedBy.name}
+                </Link>{" "}
+                {comment.text}
+              </p>
+
+              <p>{new Date(comment.created).toDateString()}</p>
             </div>
           ))}
         </div>

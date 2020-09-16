@@ -8,6 +8,8 @@ exports.userById = (req, res, next, id) => {
     // populate followers and following users array
     .populate("following", "_id name")
     .populate("followers", "_id name")
+
+    .select("_id title body created likes comments photo")
     .exec((err, user) => {
       if (err || !user) {
         return res.status(400).json({
@@ -64,6 +66,7 @@ exports.getUser = (req, res) => {
 
 exports.updateUser = (req, res, next) => {
   let form = new formidable.IncomingForm();
+  // console.log("incoming form data: ", form);
   form.keepExtensions = true;
   form.parse(req, (err, fields, files) => {
     if (err) {
@@ -73,8 +76,11 @@ exports.updateUser = (req, res, next) => {
     }
     // save user
     let user = req.profile;
+    // console.log("user in update: ", user);
     user = _.extend(user, fields);
+
     user.updated = Date.now();
+    // console.log("USER FORM DATA UPDATE: ", user);
 
     if (files.photo) {
       user.photo.data = fs.readFileSync(files.photo.path);
@@ -89,6 +95,7 @@ exports.updateUser = (req, res, next) => {
       }
       user.hashed_password = undefined;
       user.salt = undefined;
+      // console.log("user after update with formdata: ", user);
       res.json(user);
     });
   });
@@ -96,7 +103,7 @@ exports.updateUser = (req, res, next) => {
 
 exports.userPhoto = (req, res, next) => {
   if (req.profile.photo.data) {
-    res.set(("Content-Type", req.profile.photo.contentType));
+    res.set("Content-Type", req.profile.photo.contentType);
     return res.send(req.profile.photo.data);
   }
   next();

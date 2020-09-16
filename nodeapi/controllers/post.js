@@ -6,6 +6,9 @@ const _ = require("lodash");
 exports.postById = (req, res, next, id) => {
   Post.findById(id)
     .populate("postedBy", "_id name")
+    .populate("comments.postedBy", "_id name")
+    .populate("postedBy", "_id name role")
+    .select("_id title body created likes comments photo")
     .exec((err, post) => {
       if (err || !post) {
         return res.status(400).json({
@@ -16,13 +19,13 @@ exports.postById = (req, res, next, id) => {
       next();
     });
 };
-
 exports.getPosts = (req, res) => {
   const posts = Post.find()
     .populate("postedBy", "_id name")
-    .populate("comments", "text created")
-    .populate("comments.postedBy", "_id name")
-    .select("_id body created likes")
+    .populate("postedBy", "_id name role")
+    .populate("comments", "text created photo")
+    .populate("comments.postedBy", "_id name photo")
+    .select("_id title body created likes comments photo")
     .sort({ created: -1 })
     .then((posts) => {
       res.json(posts);
@@ -61,7 +64,8 @@ exports.createPost = (req, res) => {
 exports.postByUser = (req, res) => {
   Post.find({ postedBy: req.profile._id })
     .populate("postedBy", "_id name")
-    .select("_id body created likes")
+    .populate("postedBy", "_id name role")
+    .select("_id title body created likes comments photo")
     .sort("_created")
     .exec((err, posts) => {
       if (err) {
@@ -74,7 +78,7 @@ exports.postByUser = (req, res) => {
 };
 
 exports.isPoster = (req, res, next) => {
-  let isPoster = req.post && req.auth && req.post.postedBy._id == req.auth._id;
+  let isPoster = req.post && req.auth && req.post.postedBy._id === req.auth._id;
   if (!isPoster) {
     return res.status(403).json({
       error: "User is not authorized",
@@ -143,8 +147,11 @@ exports.deletePost = (req, res) => {
 };
 
 exports.photo = (req, res, next) => {
-  res.set("Content-Type", req.post.photo.contentType);
-  return res.send(req.post.photo.data);
+  if (req.post.photo.data) {
+    res.set("Content-Type", req.post.photo.contentType);
+    return res.send(req.post.photo.data);
+  }
+  next();
 };
 
 exports.singlePost = (req, res) => {
@@ -193,6 +200,7 @@ exports.comment = (req, res) => {
   )
     .populate("comments.postedBy", "_id name")
     .populate("postedBy", "_id name")
+    .populate("postedBy", "_id name role")
     .exec((err, result) => {
       if (err) {
         return res.status(400).json({

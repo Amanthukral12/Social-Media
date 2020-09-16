@@ -25,7 +25,7 @@ export default class SinglePost extends Component {
     const postId = this.props.match.params.postId;
     singlePost(postId).then((data) => {
       if (data.error) {
-        console.log(data.error);
+        this.setState({ error: data.error });
       } else {
         this.setState({
           post: data,
