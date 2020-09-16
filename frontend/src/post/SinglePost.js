@@ -132,7 +132,7 @@ export default class SinglePost extends Component {
         <div className="bg-white col-md-5 mt-5 mb-5 border">
           <Comment
             postId={post._id}
-            comments={comments}
+            comments={comments.reverse()}
             updateComments={this.updateComments}
           />
         </div>
