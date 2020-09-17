@@ -65,6 +65,7 @@ exports.postByUser = (req, res) => {
   Post.find({ postedBy: req.profile._id })
     .populate("postedBy", "_id name")
     .populate("postedBy", "_id name role")
+    .populate("comments.postedBy", "_id name")
     .select("_id title body created likes comments photo")
     .sort("_created")
     .exec((err, posts) => {
@@ -201,6 +202,7 @@ exports.comment = (req, res) => {
     .populate("comments.postedBy", "_id name")
     .populate("postedBy", "_id name")
     .populate("postedBy", "_id name role")
+
     .exec((err, result) => {
       if (err) {
         return res.status(400).json({
@@ -217,7 +219,7 @@ exports.uncomment = (req, res) => {
 
   Post.findByIdAndUpdate(
     req.body.postId,
-    { $pull: { comments: { id: comment._id } } },
+    { $pull: { comments: { _id: comment._id } } },
     { new: true }
   )
     .populate("comments.postedBy", "_id name")
@@ -231,4 +233,35 @@ exports.uncomment = (req, res) => {
         res.json(result);
       }
     });
+};
+
+exports.updateComments = (req, res) => {
+  let comment = req.body.comment;
+
+  Post.findByIdAndUpdate(req.body.postId, {
+    $pull: { comments: { _id: comment._id } },
+  }).exec((err, result) => {
+    if (err) {
+      return res.status(400).json({
+        error: err,
+      });
+    } else {
+      Post.findByIdAndUpdate(
+        req.body.postId,
+        { $push: { comments: comment, updated: new Date() } },
+        { new: true }
+      )
+        .populate("comments.postedBy", "_id name")
+        .populate("postedBy", "_id name")
+        .exec((err, result) => {
+          if (err) {
+            return res.status(400).json({
+              error: err,
+            });
+          } else {
+            res.json(result);
+          }
+        });
+    }
+  });
 };

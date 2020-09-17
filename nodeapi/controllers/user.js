@@ -9,7 +9,6 @@ exports.userById = (req, res, next, id) => {
     .populate("following", "_id name")
     .populate("followers", "_id name")
 
-    .select("_id title body created likes comments photo")
     .exec((err, user) => {
       if (err || !user) {
         return res.status(400).json({
