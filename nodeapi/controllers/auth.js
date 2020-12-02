@@ -32,10 +32,10 @@ exports.signin = (req, res) => {
           "Please provide the correct email or password. Please Signin again.",
       });
     }
-    const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET);
+    const token = jwt.sign({ _id: user._id, role:user.role }, process.env.JWT_SECRET);
     res.cookie("t", token, { expire: new Date() + 9999 });
-    const { _id, name, email } = user;
-    return res.json({ token, user: { _id, email, name } });
+    const { _id, name, email, role } = user;
+    return res.json({ token, user: { _id, email, name, role } });
   });
 };
 
@@ -58,21 +58,20 @@ exports.forgotPassword = (req, res) => {
   console.log("forgot password finding user with that email");
   const { email } = req.body;
   console.log("signin req.body", email);
-  // find the user based on email
+  
   User.findOne({ email }, (err, user) => {
-    // if err or no user
+    
     if (err || !user)
       return res.status("401").json({
         error: "User with that email does not exist!",
       });
 
-    // generate a token with user id and secret
     const token = jwt.sign(
       { _id: user._id, iss: "NODEAPI" },
       process.env.JWT_SECRET
     );
 
-    // email data
+    
     const emailData = {
       from: "noreply@node-react.com",
       to: email,
@@ -94,17 +93,13 @@ exports.forgotPassword = (req, res) => {
   });
 };
 
-// to allow user to reset password
-// first you will find the user in the database with user's resetPasswordLink
-// user model's resetPasswordLink's value must match the token
-// if the user's resetPasswordLink(token) matches the incoming req.body.resetPasswordLink(token)
-// then we got the right user
+
 
 exports.resetPassword = (req, res) => {
   const { resetPasswordLink, newPassword } = req.body;
 
   User.findOne({ resetPasswordLink }, (err, user) => {
-    // if err or no user
+    
     if (err || !user)
       return res.status("401").json({
         error: "Invalid Link!",
@@ -132,35 +127,35 @@ exports.resetPassword = (req, res) => {
 };
 
 exports.socialLogin = (req, res) => {
-  // try signup by finding user with req.email
+  
   let user = User.findOne({ email: req.body.email }, (err, user) => {
       if (err || !user) {
-          // create a new user and login
+         
           user = new User(req.body);
           req.profile = user;
           user.save();
-          // generate a token with user id and secret
+         
           const token = jwt.sign(
               { _id: user._id, iss: "NODEAPI" },
               process.env.JWT_SECRET
           );
           res.cookie("t", token, { expire: new Date() + 9999 });
-          // return response with user and token to frontend client
+         
           const { _id, name, email } = user;
           return res.json({ token, user: { _id, name, email } });
       } else {
-          // update existing user with new social info and login
+          
           req.profile = user;
           user = _.extend(user, req.body);
           user.updated = Date.now();
           user.save();
-          // generate a token with user id and secret
+         
           const token = jwt.sign(
               { _id: user._id, iss: "NODEAPI" },
               process.env.JWT_SECRET
           );
           res.cookie("t", token, { expire: new Date() + 9999 });
-          // return response with user and token to frontend client
+          
           const { _id, name, email } = user;
           return res.json({ token, user: { _id, name, email } });
       }

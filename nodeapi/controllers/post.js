@@ -79,7 +79,13 @@ exports.postByUser = (req, res) => {
 };
 
 exports.isPoster = (req, res, next) => {
-  let isPoster = req.post && req.auth && req.post.postedBy._id === req.auth._id;
+  let sameUser= req.post && req.auth && req.post.postedBy._id == req.auth._id;
+  let adminUser= req.post && req.auth && req.auth.role === "admin";
+
+  console.log("req.post", req.post, "req.auth", req.auth);
+  console.log("SameUser", sameUser, "AdminUser", adminUser);
+
+  let isPoster = sameUser || adminUser;
   if (!isPoster) {
     return res.status(403).json({
       error: "User is not authorized",
@@ -88,19 +94,7 @@ exports.isPoster = (req, res, next) => {
   next();
 };
 
-// exports.updatePost = (req, res, next) => {
-//   let post = req.post;
-//   post = _.extend(post, req.body);
-//   post.updated = Date.now();
-//   post.save((err) => {
-//     if (err) {
-//       return res.status(400).json({
-//         error: err,
-//       });
-//     }
-//     res.json(post);
-//   });
-// };
+
 
 exports.updatePost = (req, res, next) => {
   let form = new formidable.IncomingForm();
