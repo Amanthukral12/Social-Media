@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Link, Redirect } from "react-router-dom";
 import { signin, authenticate } from "../auth";
+import SocialLogin from "./SocialLogin";
 
 export default class Signin extends Component {
   constructor() {
@@ -43,6 +44,9 @@ export default class Signin extends Component {
       <div className="container">
         <br /> <br />
         <h2 className="mb-5">Signin</h2>
+        <hr />
+        <SocialLogin/>
+        <hr />
         <div
           className="alert alert-danger"
           style={{ display: this.state.error ? "" : "none" }}

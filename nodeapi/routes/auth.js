@@ -12,12 +12,12 @@ const { userById } = require("../controllers/user");
 const router = express.Router();
 
 router.post("/signup", userSignupValidator, signup);
-router.post("/social-login", socialLogin);
+
 router.post("/signin", signin);
 router.get("/signout", signout);
 router.put("/forgot-password", forgotPassword);
 router.put("/reset-password", passwordResetValidator, resetPassword);
-
+router.post("/social-login", socialLogin);
 router.param("userId", userById);
 
 module.exports = router;
