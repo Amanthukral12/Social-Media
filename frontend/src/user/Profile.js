@@ -79,8 +79,9 @@ class Profile extends Component {
 
   render() {
     const { redirectToSignin, user, posts } = this.state;
+    
     if (redirectToSignin) return <Redirect to="/signin" />;
-
+    
     const photoUrl = user._id
       ? `${process.env.REACT_APP_API_URL}/user/photo/${user._id}`
       : DefaultProfile;
@@ -122,6 +123,28 @@ class Profile extends Component {
                 onButtonClick={this.clickFollowButton}
               />
             )}
+            <div>
+    {isAuthenticated().user &&
+        isAuthenticated().user.role === "admin" && (
+            <div class="card mt-5">
+                <div className="card-body">
+                    <h5 className="card-title">
+                        Admin
+                    </h5>
+                    <p className="mb-2 text-danger">
+                        Edit/Delete as an Admin
+                    </p>
+                    <Link
+                        className="btn btn-raised btn-success mr-5"
+                        to={`/user/edit/${user._id}`}
+                    >
+                        Edit Profile
+                    </Link>
+                    <DeleteUser userId={user._id} />
+                </div>
+            </div>
+        )}
+</div>
           </div>
         </div>
         <div className="row">

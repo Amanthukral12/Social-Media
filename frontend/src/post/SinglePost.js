@@ -101,6 +101,7 @@ export default class SinglePost extends Component {
               </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
+          
           <img
             src={`${process.env.REACT_APP_API_URL}/post/photo/${post._id}`}
             style={{ height: "614px", width: "614px" }}
