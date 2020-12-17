@@ -42,7 +42,7 @@ function Menu({ history }) {
             className="nav-item"
             style={{
               marginLeft: "35rem",
-              marginRight: "22rem",
+              marginRight: "20rem",
               textDecoration: "none"
             }}
           >

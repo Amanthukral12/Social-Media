@@ -21,13 +21,15 @@ export default class EditPost extends Component {
         this.setState({ redirectToProfile: true });
       } else {
         this.setState({
-          id: data.postedBy_id,
+          id: data._id,
           body: data.body,
           error: "",
         });
       }
     });
   };
+
+  
 
   componentDidMount() {
     this.postData = new FormData();
@@ -106,9 +108,16 @@ export default class EditPost extends Component {
 
   render() {
     const { id, body, redirectToProfile, error } = this.state;
+    console.log(id);
     if (redirectToProfile) {
       return <Redirect to={`/user/${isAuthenticated().user._id}`} />;
     }
+
+    const photoUrl=id
+    ? `${
+      process.env.REACT_APP_API_URL
+  }/post/photo/${id}?${new Date().getTime()}`
+  : DefaultPost; 
     return (
       <div className="container">
         <br />
@@ -121,13 +130,12 @@ export default class EditPost extends Component {
           {error}
         </div>
         <img
-          style={{ height: "200px", width: "auto" }}
-          className="img-thumbnail"
-          src={`${
-            process.env.REACT_APP_API_URL
-          }/post/photo/${id}?${new Date().getTime()}`}
-          onError={(i) => (i.target.src = `${DefaultPost}`)}
-        />
+                    style={{ height: "200px", width: "auto" }}
+                    className="img-thumbnail"
+                    src={photoUrl}
+                    onError={i => (i.target.src = `${DefaultPost}`)}
+                    
+                />
         {isAuthenticated().user.role === "admin" &&
             this.editPostForm( body)}
 

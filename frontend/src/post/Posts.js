@@ -47,8 +47,9 @@ class Posts extends Component {
                     style={{
                       width: "100%",
                       height: "300px",
-                      borderRadius: "10px",
-                      marginBottom:"10px"
+                      borderRadius: "8px",
+                      marginBottom:"10px",
+                      border:"1px solid black"
                     }}
                   />
                 </Link>
