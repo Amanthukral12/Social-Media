@@ -129,8 +129,33 @@ export default class SinglePost extends Component {
           </p>
 
           <p>{new Date(post.created).toDateString()}</p>
+          <div>
+    {isAuthenticated().user &&
+        isAuthenticated().user.role === "admin" && (
+            <div class="card mt-5">
+                <div className="card-body">
+                    <h5 className="card-title">Admin</h5>
+                    <p className="mb-2 text-danger">
+                        Edit/Delete as an Admin
+                    </p>
+                    <Link
+                        to={`/post/edit/${post._id}`}
+                        className="btn btn-raised btn-warning btn-sm mr-5"
+                    >
+                        Update Post
+                    </Link>
+                    <button
+                        onClick={this.deleteConfirmed}
+                        className="btn btn-raised btn-danger"
+                    >
+                        Delete Post
+                    </button>
+                </div>
+            </div>
+        )}
+</div>
         </div>
-        <div className="bg-white col-md-5 mt-5 mb-5 border">
+        <div className="bg-white col-md-5 mt-5 mb-5 border" style={{height:"772px"}}>
           <Comment
             postId={post._id}
             comments={comments.reverse()}

@@ -100,6 +100,8 @@ class NewPost extends Component {
 
     return (
       <div className="container">
+      <br/>
+      <br/>
         <h2 className=" mb-5">Create a new post</h2>
         <div
           className="alert alert-danger"

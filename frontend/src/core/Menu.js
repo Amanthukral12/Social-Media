@@ -7,7 +7,7 @@ const isActive = (history, path) => {
     return {
       color: "#ff9900",
       fontWeight: "bold",
-      lineHeight: 2,
+      lineHeight: 1.5,
       paddingTop: "0rem",
       paddingBottom: "0rem",
       fontSize: 20,
@@ -15,11 +15,11 @@ const isActive = (history, path) => {
   else {
     return {
       color: "#ffffff",
-      fontWeight: "bold",
-      lineHeight: 2,
+      lineHeight: 1.5,
       paddingTop: "0rem",
       paddingBottom: "0rem",
       fontSize: 20,
+      textDecoration: "none"
     };
   }
 };
@@ -43,6 +43,7 @@ function Menu({ history }) {
             style={{
               marginLeft: "35rem",
               marginRight: "22rem",
+              textDecoration: "none"
             }}
           >
             <Link className="nav-link" style={isActive(history, "/")} to="/">

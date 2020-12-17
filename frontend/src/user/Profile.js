@@ -78,6 +78,7 @@ class Profile extends Component {
   }
 
   render() {
+    
     const { redirectToSignin, user, posts } = this.state;
     
     if (redirectToSignin) return <Redirect to="/signin" />;

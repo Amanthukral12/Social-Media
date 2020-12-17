@@ -32,7 +32,7 @@ export default class DeleteUser extends Component {
 
   render() {
     if (this.state.redirect) {
-      return <Redirect tp="/" />;
+      return <Redirect to="/" />;
     }
     return (
       <button

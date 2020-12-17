@@ -9,13 +9,13 @@ class EditProfile extends Component {
     super();
     this.state = {
       id: "",
-      name: "",
-      email: "",
-      password: "",
+      name: '',
+      email: '',
+      password: '',
       redirectToProfile: false,
-      error: "",
+      error: '',
       fileSize: 0,
-      about: "",
+      about: '',
     };
   }
 
@@ -75,27 +75,34 @@ class EditProfile extends Component {
     this.setState({ [name]: value, fileSize });
   };
 
-  clickSubmit = (event) => {
+  clickSubmit = event => {
     event.preventDefault();
-
+    this.setState({ loading: true });
+ 
     if (this.isValid()) {
-      // console.log(user);
-      const userId = this.props.match.params.userId;
-      const token = isAuthenticated().token;
-
-      update(userId, token, this.userData).then((data) => {
-        if (data.error) this.setState({ error: data.error });
-        else
-          updateUser(data, () => {
-            this.setState({
-              redirectToProfile: true,
-            });
-          });
-      });
+        const userId = this.props.match.params.userId;
+        const token = isAuthenticated().token;
+ 
+        update(userId, token, this.userData).then(data => {
+            if (data.error) {
+                this.setState({ error: data.error });
+                // if admin only redirect
+            } else if (isAuthenticated().user.role === "admin") {
+                this.setState({
+                    redirectToProfile: true
+                });
+            } else {
+                // if same user update localstorage and redirect
+                updateUser(data, () => {
+                    this.setState({
+                        redirectToProfile: true
+                    });
+                });
+            }
+        });
     }
-  };
-
-  signupForm = (name, email, about, password) => (
+};
+  signupForm = (name, about) => (
     <form>
       <div className="form-group">
         <label className="text-muted">Profile Photo</label>
@@ -125,15 +132,7 @@ class EditProfile extends Component {
           value={about}
         />
       </div>
-      <div className="form-group">
-        <label className="text-muted">Password</label>
-        <input
-          onChange={this.handleChange("password")}
-          type="password"
-          className="form-control"
-          value={password}
-        />
-      </div>
+     
 
       <button
         onClick={this.clickSubmit}
@@ -148,7 +147,6 @@ class EditProfile extends Component {
     const {
       id,
       name,
-      email,
       password,
       redirectToProfile,
       error,
@@ -185,7 +183,11 @@ class EditProfile extends Component {
           alt={name}
         />
 
-        {this.signupForm(name, email, about, password)}
+        {isAuthenticated().user.role === "admin" &&
+            this.signupForm(name, about)}
+         
+        {isAuthenticated().user._id === id &&
+            this.signupForm(name, about)}   
       </div>
     );
   }

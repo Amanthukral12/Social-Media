@@ -21,7 +21,7 @@ export default class EditPost extends Component {
         this.setState({ redirectToProfile: true });
       } else {
         this.setState({
-          id: data._id,
+          id: data.postedBy_id,
           body: data.body,
           error: "",
         });
@@ -64,7 +64,7 @@ export default class EditPost extends Component {
 
     if (this.isValid()) {
       // console.log(user);
-      const postId = this.state.id;
+      const postId = this.props.match.params.postId;
       const token = isAuthenticated().token;
 
       update(postId, token, this.postData).then((data) => {
@@ -128,7 +128,11 @@ export default class EditPost extends Component {
           }/post/photo/${id}?${new Date().getTime()}`}
           onError={(i) => (i.target.src = `${DefaultPost}`)}
         />
-        {this.editPostForm(body)}
+        {isAuthenticated().user.role === "admin" &&
+            this.editPostForm( body)}
+
+        {isAuthenticated().user.id === id &&
+            this.editPostForm( body)}               
       </div>
     );
   }

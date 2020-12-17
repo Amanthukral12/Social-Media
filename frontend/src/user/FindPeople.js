@@ -83,6 +83,8 @@ export default class FindPeople extends Component {
     const { users, open, followMessage } = this.state;
     return (
       <div className="container">
+      <br/>
+      <br/>
         <h2 className=" mb-5">Explore People</h2>
         {open && (
           <div className="alert alert-success">
@@ -90,6 +92,8 @@ export default class FindPeople extends Component {
           </div>
         )}
         {this.renderUsers(users)}
+        <br/>
+      <br/>
       </div>
     );
   }
